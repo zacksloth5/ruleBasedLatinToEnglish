@@ -82,6 +82,7 @@ class Word:
         self.text = text
         self.rawText = text
         self.translation = None
+        self.needed = True
 
         if text in englishToLatin:
             self.dictEntry = englishToLatin[text]

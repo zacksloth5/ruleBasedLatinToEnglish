@@ -9,5 +9,3 @@ class Preposition(Word):
 
         self.translation = self.dictEntry[0]
         self.argumentType = self.dictEntry[1]
-
-        self.needed = True

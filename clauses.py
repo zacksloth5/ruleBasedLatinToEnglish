@@ -6,7 +6,7 @@ from preposition import *
 
 
 class Clause:
-    def __init__(self, text, clauseNumber):
+    def __init__(self, text, prevClause, clauseNumber):
         self.text = text
         self.wordList = []
         self.wordObjectList = []
@@ -16,6 +16,9 @@ class Clause:
 
         self.nextSeperator = None
         self.clauseNumber = clauseNumber
+        self.prevClause = prevClause
+
+        print(f'Initialized clause #{self.clauseNumber}')
 
     def execute(self):
         #Split into Wordlist
@@ -59,14 +62,22 @@ class Clause:
                 self.wordObjectList.append(currPreposition)
                 wordNumber += 1
                 continue
-            
-            #The first word not in a preposition is assumed to be the subject.
+
+            #The first word not in a preposition is assumed to be the subject if it does not have 4 dictionary entries
             if wordPosition == 0:
                 if word in englishPronouns:
                     self.subject = Pronoun(word, NounCase.NOM)
+                    self.subject.needed = False
                 else:
                     self.subject = Noun(word, NounCase.NOM)
-                
+
+                    #Checks if the subject is actually a verb. Then it will revert to the previous clause subject
+                    #It then increase position so that it is now interpretted as a verb and the noun is never added to the list
+                    if len(self.subject.dictEntry) == 4:
+                        self.subject = self.prevClause.subject
+                        self.subject.needed = False
+                        wordPosition += 1
+            
                 self.wordObjectList.append(self.subject)
 
             #The second word not in a preposition is assumed to be the verb.
@@ -146,13 +157,14 @@ class Clause:
         
         if word.case == NounCase.NOM:
             #Makes it so that pronouns in the nominative are not added (as they are assumed).
-            if word.partOfSpeech == Speech.NOUN:
+            if word.needed: 
                 self.reOrderedWords[1].append(word)
 
             if thoughtProccess: print(f"Translated {word} as {word.translation}")
 
         if word.case == NounCase.ACC:
-            self.reOrderedWords[3].append(word)
+            if word.needed:
+                self.reOrderedWords[3].append(word)
 
             if thoughtProccess: print(f"Translated {word} as {word.translation}")
 
@@ -175,7 +187,7 @@ class Sentence:
 
     def execute(self):
         self.filterText()
-        self.clauses.append(Clause(self.text, 1))
+        self.clauses.append(Clause(self.text, None, 1))
 
         currClause = self.clauses[0]
         currClause.execute()
@@ -188,7 +200,7 @@ class Sentence:
             remainingText = remainingText.removeprefix(" " + currClause.nextSeperator)
             currClause.translation += (" " + englishToLatin[currClause.nextSeperator][0])
 
-            newClause = Clause(remainingText, currClause.clauseNumber + 1)
+            newClause = Clause(remainingText, currClause, currClause.clauseNumber + 1)
 
             newClause.execute()
             self.clauses.append(newClause)
