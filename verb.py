@@ -41,8 +41,7 @@ class Verb(Word):
         self.dictEntry = englishToLatin[self.rawText]
         self.determineConjugation()
 
-        if thoughtProccess:
-            print(f"{self.text} initalized with conjugation {self.conjugation}.")
+        if thoughtProccess: print(f"{self.text} initalized with conjugation {self.conjugation}.")
 
     def determineConjugation(self):
         part1, part2 = self.dictEntry[0], self.dictEntry[1]

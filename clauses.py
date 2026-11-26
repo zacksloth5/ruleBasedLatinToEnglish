@@ -6,7 +6,7 @@ from preposition import *
 
 
 class Clause:
-    def __init__(self, text):
+    def __init__(self, text, clauseNumber):
         self.text = text
         self.wordList = []
         self.wordObjectList = []
@@ -15,6 +15,7 @@ class Clause:
         self.subject = None
 
         self.nextSeperator = None
+        self.clauseNumber = clauseNumber
 
     def execute(self):
         #Split into Wordlist
@@ -25,11 +26,11 @@ class Clause:
 
         self.initiateWords()
 
-        if thoughtProccess: print('Words in this clause are initiated.\n')
+        if thoughtProccess: print(f'Words in clause #{self.clauseNumber}  are initiated.\n')
 
         self.generateTranslation()
 
-        if thoughtProccess: print('Translations in this clause have generated.\n')
+        if thoughtProccess: print(f'Translations in clause #{self.clauseNumber} have generated.\n')
 
         self.translation = ' '.join(word.translation for word in self.wordList)
 
@@ -160,7 +161,7 @@ class Sentence:
 
     def execute(self):
         self.filterText()
-        self.clauses.append(Clause(self.text))
+        self.clauses.append(Clause(self.text, 1))
 
         currClause = self.clauses[0]
         currClause.execute()
@@ -173,7 +174,7 @@ class Sentence:
             remainingText = remainingText.removeprefix(" " + currClause.nextSeperator)
             currClause.translation += (" " + englishToLatin[currClause.nextSeperator][0])
 
-            newClause = Clause(remainingText)
+            newClause = Clause(remainingText, currClause.clauseNumber + 1)
 
             newClause.execute()
             self.clauses.append(newClause)

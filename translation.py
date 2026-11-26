@@ -1,6 +1,5 @@
 from clauses import *
 
-
 translations = 0
 def translate(englishText):
     global translations
@@ -8,11 +7,13 @@ def translate(englishText):
     sentenceText = Sentence(englishText)
     sentenceText.execute()
 
+    latinTranslation = str(sentenceText).capitalize() + "." 
+    
     print(f"----------------------Translation #{translations}----------------------")
-    print(f"\"{englishText}\" \nto:\n{str(sentenceText).capitalize()}\n")
+    print(f"\"{englishText}\" \nto:\n{latinTranslation}\n")
 
 sentencesToTranslate = [
-"At night, the father works"
+"At night, the father works and the father captures the robber"
 ]
 
 
