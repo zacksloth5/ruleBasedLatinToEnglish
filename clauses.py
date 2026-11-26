@@ -39,12 +39,14 @@ class Clause:
         wordNumber = 0
         currPreposition = None
 
+        #Iterative loop which attempts to classify each word in the sentence
         for word in self.wordList:
             #If we get in a preposition stop counting and go in the prepositional phrase
             if currPreposition:
                 argument = Noun(word, currPreposition.argumentType)
                 self.wordObjectList.append(argument)
 
+                #Ablative of time-when does not need a preposition.
                 if argument.temporal and self.wordObjectList[-2].text == 'at':
                     self.wordObjectList[-2].needed = False
 
@@ -57,33 +59,41 @@ class Clause:
                 self.wordObjectList.append(currPreposition)
                 wordNumber += 1
                 continue
-
+            
+            #The first word not in a preposition is assumed to be the subject.
             if wordPosition == 0:
                 if word in englishPronouns:
-                    self.subject = Pronoun(word)
+                    self.subject = Pronoun(word, NounCase.NOM)
                 else:
                     self.subject = Noun(word, NounCase.NOM)
                 
                 self.wordObjectList.append(self.subject)
 
+            #The second word not in a preposition is assumed to be the verb.
             if wordPosition == 1:
                 self.wordObjectList.append(Verb(word))
 
+            #The third word not in a preposition is assumed to be the object if it is not a conjunction.
             if wordPosition == 2 and word not in englishConjunctions:
-                self.wordObjectList.append(Noun(word, NounCase.ACC))
+                if word in englishPronouns:
+                    self.wordObjectList.append(Pronoun(word, NounCase.ACC))
+                else:
+                    self.wordObjectList.append(Noun(word, NounCase.ACC))
 
+            #After the subject and verb have been found, if a conjunction is spotted start a new clause and truncate this one.
             if wordPosition >= 2 and word in englishConjunctions:
                 self.nextSeperator = word
                 self.text = ' '.join(self.wordList[:wordNumber])
                 break
-            
+
+            #Iterate wordNumber (the literal number) and wordPosition (excludes prepositions and conjunctions).
             wordNumber += 1
             wordPosition += 1
 
     def generateTranslation(self):
         self.reOrderedWords = [
         [], #Potential starting Ablative of Time-When
-        [], #Potential Subject of the Sentence
+        [], #Subject of the Sentence
         [], #Potential Prepositional Phrase of the Sentence
         [], #Potential Object of the Sentence
         []  #Verb of the sentence
@@ -92,11 +102,14 @@ class Clause:
         inPrepostion = False
         withPreposition = False
 
+        #Go through the words of the sentence!
         for word in self.wordObjectList:
+            #Preposition module and handling!
             if word.partOfSpeech == Speech.PREP:
                 inPrepostion = True
                 withPreposition = False
 
+                #Only if the preposition is determined as needed as many ablatives render it unnecesary.
                 if word.needed:
                     self.reOrderedWords[2].append(word)
                     withPreposition = True
@@ -132,6 +145,7 @@ class Clause:
         word.decline()
         
         if word.case == NounCase.NOM:
+            #Makes it so that pronouns in the nominative are not added (as they are assumed).
             if word.partOfSpeech == Speech.NOUN:
                 self.reOrderedWords[1].append(word)
 

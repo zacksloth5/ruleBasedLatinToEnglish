@@ -13,7 +13,7 @@ def translate(englishText):
     print(f"\"{englishText}\" \nto:\n{latinTranslation}\n")
 
 sentencesToTranslate = [
-"At night, the father works and the father captures the robber"
+"You love the father"
 ]
 
 

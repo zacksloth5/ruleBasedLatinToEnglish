@@ -10,13 +10,11 @@ class Pronoun(Word):
 
         self.dictEntry = englishToLatin[self.rawText]
 
-        if thoughtProccess:
-            print(f"Initalized pronoun, {self.text}.")
+        if thoughtProccess: print(f"Initalized pronoun, {self.text}.")
 
     def decline(self):
         self.translation = self.dictEntry[self.case]
         
-
     def getPronounProperties(self):
         match self. text:
             case 'i':

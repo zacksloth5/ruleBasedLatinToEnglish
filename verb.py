@@ -12,7 +12,7 @@ class Verb(Word):
 
         self.number = number
 
-        if thoughtProccess: print(f"Initalized {self.text}")
+        if thoughtProccess: print(f"Initalized verb, {self.text}")
 
 
     def takeSubject(self, subject):
