@@ -18,7 +18,7 @@ class Clause:
         self.clauseNumber = clauseNumber
         self.prevClause = prevClause
 
-        print(f'Initialized clause #{self.clauseNumber}')
+        if thoughtProccess: print(f'Initialized clause #{self.clauseNumber}')
 
     def execute(self):
         #Split into Wordlist

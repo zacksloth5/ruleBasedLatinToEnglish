@@ -75,7 +75,7 @@ englishConjunctions = ['and', 'but', 'because']
 
 englishPronouns = ['i', 'me', 'you', 'we', 'us']
 
-thoughtProccess = True
+thoughtProccess = False
 
 class Word:
     def __init__(self, text, partOfSpeech):
