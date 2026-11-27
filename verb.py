@@ -24,6 +24,21 @@ class Verb(Word):
         if subject.partOfSpeech == Speech.PRO:
             self.person = subject.person
 
+        self.determineRawText()
+
+        
+
+        self.dictEntry = englishToLatin[self.rawText]
+        self.determineConjugation()
+
+        if thoughtProccess: print(f"{self.text} initalized with conjugation {self.conjugation}.")
+
+    def determineRawText(self):
+        #Accounting for the irregular verb, 'to be'
+        if self.rawText in ['am', 'are', 'is']:
+            self.rawText = 'be'
+
+        #Accounts for changing something like 'he works' to 'he work' for parsing.
         if self.number == Number.SNG and self.person == VerbPerson.THR:
             if self.rawText in englishToLatin:
                 pass
@@ -34,10 +49,7 @@ class Verb(Word):
             elif self.rawText[:-2] in englishToLatin:
                 self.rawText = self.rawText[:-2]
 
-        self.dictEntry = englishToLatin[self.rawText]
-        self.determineConjugation()
-
-        if thoughtProccess: print(f"{self.text} initalized with conjugation {self.conjugation}.")
+        
 
     def determineConjugation(self):
         part1, part2 = self.dictEntry[0], self.dictEntry[1]
@@ -52,15 +64,23 @@ class Verb(Word):
             self.conjugation = 3
         elif part2.endswith('ire'):
             self.conjugation = 4
+        elif part1.endswith('sum'):
+            self.conjugation = 0
+        else:
+            self.conjugation = -1
 
     def conjugate(self):
+        part1 = self.dictEntry[0]
+
         if (self.person, self.number) == (VerbPerson.ONE, Number.SNG):
-            self.translation = self.dictEntry[0]
+            self.translation = part1
             return
 
         part2 = self.dictEntry[1]
 
         match self.conjugation:
+            case 0:
+                self.translation = toBeConj(part1, self.person, self.number)
             case 1:
                 self.translation = firstConj(part2, self.person, self.number)
             case 2:

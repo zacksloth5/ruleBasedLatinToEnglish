@@ -65,7 +65,8 @@ englishToLatin = {
     'capture': ['capio', 'capere', 'cepi', 'captum'],
     'hear': ['audio', 'audire', 'audivi', 'auditum'],
     'thief': ['fur', 'furis', 'm'],
-    'robber': ['fur', 'furis', 'm']
+    'robber': ['fur', 'furis', 'm'],
+    'be': ['sum', 'esse', 'fui', 'futurum']
 }
 
 englishPrepositions = ['in', 'into', 'onto', 'to', 'through', 'at', 'with']

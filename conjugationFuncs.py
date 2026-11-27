@@ -95,3 +95,22 @@ def fourthConj(infinitive, person, number):
         case (VerbPerson.THR, Number.PLU):
             return stem + 'iunt'
 
+def toBeConj(oneSingularForm, person, number):
+    stem = oneSingularForm[:-3] 
+
+    match (person, number):
+        case (VerbPerson.TWO, Number.SNG):
+            return stem + 'es'
+
+        case (VerbPerson.THR, Number.SNG):
+            return stem + 'est'
+
+        case (VerbPerson.ONE, Number.PLU):
+            return stem + 'sumus'
+
+        case (VerbPerson.TWO, Number.PLU):
+            return stem + 'estis'
+
+        case (VerbPerson.THR, Number.PLU):
+            return stem + 'sunt'
+
