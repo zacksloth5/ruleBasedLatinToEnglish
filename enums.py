@@ -58,6 +58,7 @@ englishToLatin = {
     'city': ['urbs', 'urbis', 'f'],
     'sister': ['soror', 'sororis', 'f'],
     'father': ['pater', 'patris', 'm'],
+    'bird': ['avis', 'avis', 'f'],
     'night': ['nox', 'noctis', 'f'],
     'love': ['amo', 'amare', 'amavi', 'amatum'],
     'work': ['laboro', 'laborare', 'laboravi', 'laboratum'],
