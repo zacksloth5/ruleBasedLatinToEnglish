@@ -1,5 +1,5 @@
 from enums import *
-from conjugationFuncs import *
+from CaseHandling.conjugationFuncs import *
 
 class Verb(Word):
     def __init__(self, text, person = VerbPerson.NONE, number = Number.NONE, infinitive = False):

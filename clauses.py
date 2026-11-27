@@ -1,8 +1,8 @@
 from enums import *
-from noun import *
-from verb import *
-from pronoun import *
-from preposition import *
+from PartOfSpeechFiles.noun import *
+from PartOfSpeechFiles.verb import *
+from PartOfSpeechFiles.pronoun import *
+from PartOfSpeechFiles.preposition import *
 
 
 class Clause:

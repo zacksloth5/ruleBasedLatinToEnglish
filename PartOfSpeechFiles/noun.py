@@ -1,5 +1,5 @@
 from enums import *
-from declensionFuncs import *
+from CaseHandling.declensionFuncs import *
 
 class Noun(Word):
     def __init__(self, text, case = NounCase.NONE, number = Number.NONE):
