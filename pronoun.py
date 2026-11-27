@@ -37,6 +37,10 @@ class Pronoun(Word):
             case 'us':
                 self.rawText = 'we'
                 self.number = Number.PLU
-                self.person = VerbPerson.TWO
+                self.person = VerbPerson.ONE
                 if self.case == NounCase.NONE:
                     self.case = NounCase.ACC
+            case 'y\'all' | 'you all':
+                self.rawText = 'you all'
+                self.number = Number.PLU
+                self.person = VerbPerson.TWO

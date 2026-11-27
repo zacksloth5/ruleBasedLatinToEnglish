@@ -21,12 +21,8 @@ class Verb(Word):
 
         self.number = subject.number
 
-        if subject.text == 'i':
-            self.person, self.number = VerbPerson.ONE, Number.SNG
-        elif subject.text == 'we':
-            self.person, self.number = VerbPerson.ONE, Number.PLU
-        elif subject.text == 'you':
-            self.person, self.number = VerbPerson.TWO, Number.SNG
+        if subject.partOfSpeech == Speech.PRO:
+            self.person = subject.person
 
         if self.number == Number.SNG and self.person == VerbPerson.THR:
             if self.rawText in englishToLatin:

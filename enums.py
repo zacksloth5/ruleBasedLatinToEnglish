@@ -41,6 +41,7 @@ englishToLatin = {
     'i': {NounCase.NOM: 'ego', NounCase.ACC: 'me', NounCase.ABL: 'me'},
     'you': {NounCase.NOM: 'tu', NounCase.ACC: 'te', NounCase.ABL: 'te'},
     'we': {NounCase.NOM: 'nos', NounCase.ACC: 'nos', NounCase.ABL: 'nobis'},
+    'you all': {NounCase.NOM: 'vos', NounCase.ACC: 'vos', NounCase.ABL: 'vobis'},
     'and': ['et'],
     'but': ['sed'],
     'because': ['quod'],
@@ -73,9 +74,9 @@ englishTemporalWords = ['night', 'hour', 'day']
 
 englishConjunctions = ['and', 'but', 'because']
 
-englishPronouns = ['i', 'me', 'you', 'we', 'us']
+englishPronouns = ['i', 'me', 'you', 'we', 'us', 'y\'all', 'you all']
 
-thoughtProccess = False
+thoughtProccess = True
 
 class Word:
     def __init__(self, text, partOfSpeech):
