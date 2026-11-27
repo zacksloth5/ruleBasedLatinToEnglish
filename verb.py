@@ -34,7 +34,7 @@ class Verb(Word):
         if thoughtProccess: print(f"{self.text} initalized with conjugation {self.conjugation}.")
 
     def determineRawText(self):
-        #Accounting for the irregular verb, 'to be'
+        #Accounting for the irregular verb, 'to be'.
         if self.rawText in ['am', 'are', 'is']:
             self.rawText = 'be'
 
@@ -67,6 +67,7 @@ class Verb(Word):
         elif part1.endswith('sum'):
             self.conjugation = 0
         else:
+            #-1 will be the conj. for unknown or unrecognized.
             self.conjugation = -1
 
     def conjugate(self):
@@ -91,3 +92,7 @@ class Verb(Word):
                 self.translation = thirdIOConj(part2, self.person, self.number)
             case 4:
                 self.translation = fourthConj(part2, self.person, self.number)
+            case -1:
+                warnings.warn(f'No conjugation found for {self.rawText}, translation will be the 1st principal part.')
+                self.translation = part1
+
