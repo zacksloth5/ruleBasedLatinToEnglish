@@ -70,7 +70,8 @@ englishToLatin = {
     'robber': ['fur', 'furis', 'm'],
     'be': ['sum', 'esse', 'fui', 'futurum'],
     'can': ['possum', 'posse', 'potui'],
-    'want': ['volo', 'velle', 'volui']
+    'want': ['volo', 'velle', 'volui'],
+    'escape': ['effugio', 'effugere', 'effugi', 'effugitum']
 }
 
 englishPrepositions = ['in', 'into', 'onto', 'to', 'through', 'at', 'with']

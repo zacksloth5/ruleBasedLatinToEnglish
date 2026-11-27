@@ -10,13 +10,14 @@ def translate(englishText):
     latinTranslation = str(sentenceText).capitalize() + "." 
     
     print(f"----------------------Translation #{translations}----------------------")
-    print(f"\"{englishText}\" \nto:\n{latinTranslation}\n")
+    print(f"\"{englishText}\" \nto:\n{latinTranslation}")
 
 sentencesToTranslate = [
-    "At night, we want you."
+    "At night, the thieves capture us but we can escape."
 ]
 
 
 for sentence in sentencesToTranslate:
     translate(sentence)
+
 

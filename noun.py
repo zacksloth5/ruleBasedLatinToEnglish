@@ -69,6 +69,10 @@ class Noun(Word):
             self.rawText = self.rawText[:-3] + 'y'
             return
 
+        if self.text.endswith('ves') and (self.rawText[:-3] + 'f' in englishToLatin):
+            self.rawText = self.rawText[:-3] + 'f'
+            return
+
         raise Exception(f"Could not unpluralize {self.text}")
 
     def decline(self):
