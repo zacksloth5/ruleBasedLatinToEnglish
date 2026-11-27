@@ -75,6 +75,7 @@ class Clause:
                     #Checks if the subject is actually a verb. Then it will revert to the previous clause subject.
                     #It then increase position so that it is now interpretted as a verb and the noun is never added to the list
                     if len(self.subject.dictEntry) == 4:
+                        if thoughtProccess: print(f"Noun, {word} was thrown out for replacement.")
                         self.subject = self.prevClause.subject
                         self.subject.needed = False
                         wordPosition += 1
