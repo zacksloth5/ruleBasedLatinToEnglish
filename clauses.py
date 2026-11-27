@@ -41,7 +41,8 @@ class Clause:
         wordPosition = 0  
         wordNumber = 0
         currPreposition = None
-        inInfinitive = False
+        inInfinitive = False 
+        prevWord = None
 
         #Iterative loop which attempts to classify each word in the sentence
         for word in self.wordList:
@@ -56,12 +57,14 @@ class Clause:
 
                 currPreposition = None
                 wordNumber += 1
+                prevWord = word
                 continue
 
             if word in englishPrepositions and not inInfinitive:
                 currPreposition = Preposition(word)
                 self.wordObjectList.append(currPreposition)
                 wordNumber += 1
+                prevWord = word
                 continue
 
             #The first word not in a preposition is assumed to be the subject if it does not have 4 dictionary entries
@@ -86,23 +89,28 @@ class Clause:
             if wordPosition == 1:
                 self.wordObjectList.append(Verb(word))
 
-                if word in infitivalVerbs:
+                if word in infinitivalVerbs:
                     inInfinitive = True
 
             if wordPosition == 2 and word == 'to' and inInfinitive:
                 wordNumber += 1
+                prevWord = word
                 continue
+            elif prevWord in necessaryToVerbs:
+                inInfinitive = False
 
             #The third word not in a preposition is assumed to be the object if it is not a conjunction.
             if wordPosition == 2 and word not in englishConjunctions:
                 if inInfinitive:
                     self.wordObjectList.append(Verb(word, infinitive = True))
+
                     #Now let an object still be taken, so do not increase the wordPosition
                     inInfinitive = False
                     wordNumber += 1
+                    prevWord = word
                     continue
-
-                elif word in englishPronouns:
+                
+                if word in englishPronouns:
                     self.wordObjectList.append(Pronoun(word, NounCase.ACC))    
                 else:
                     self.wordObjectList.append(Noun(word, NounCase.ACC))
@@ -111,9 +119,11 @@ class Clause:
             if wordPosition >= 2 and word in englishConjunctions:
                 self.nextSeperator = word
                 self.text = ' '.join(self.wordList[:wordNumber])
+                prevWord = word
                 break
 
             #Iterate wordNumber (the literal number) and wordPosition (excludes prepositions and conjunctions).
+            prevWord = word
             wordNumber += 1
             wordPosition += 1
 

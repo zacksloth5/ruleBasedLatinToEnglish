@@ -81,7 +81,10 @@ englishConjunctions = ['and', 'but', 'because']
 
 englishPronouns = ['i', 'me', 'you', 'we', 'us', 'y\'all', 'you all']
 
-infitivalVerbs = ['can', 'want']
+infinitivalVerbs = ['can', 'want']
+
+necessaryToVerbs = ['want']
+
 
 thoughtProccess = True
 
