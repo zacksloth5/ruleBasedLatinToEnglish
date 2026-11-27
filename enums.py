@@ -67,7 +67,9 @@ englishToLatin = {
     'hear': ['audio', 'audire', 'audivi', 'auditum'],
     'thief': ['fur', 'furis', 'm'],
     'robber': ['fur', 'furis', 'm'],
-    'be': ['sum', 'esse', 'fui', 'futurum']
+    'be': ['sum', 'esse', 'fui', 'futurum'],
+    'can': ['possum', 'posse', 'potui'],
+    'want': ['volo', 'velle', 'volui']
 }
 
 englishPrepositions = ['in', 'into', 'onto', 'to', 'through', 'at', 'with']
@@ -77,6 +79,8 @@ englishTemporalWords = ['night', 'hour', 'day']
 englishConjunctions = ['and', 'but', 'because']
 
 englishPronouns = ['i', 'me', 'you', 'we', 'us', 'y\'all', 'you all']
+
+infitivalVerbs = ['can', 'want']
 
 thoughtProccess = True
 

@@ -95,22 +95,61 @@ def fourthConj(infinitive, person, number):
         case (VerbPerson.THR, Number.PLU):
             return stem + 'iunt'
 
-def toBeConj(oneSingularForm, person, number):
-    stem = oneSingularForm[:-3] 
+def toBeConj(oneSingularForm, infinitive, person, number):
+    if infinitive == 'esse':
+        stem = oneSingularForm[:-3] 
 
+        match (person, number):
+            case (VerbPerson.TWO, Number.SNG):
+                return stem + 'es'
+
+            case (VerbPerson.THR, Number.SNG):
+                return stem + 'est'
+
+            case (VerbPerson.ONE, Number.PLU):
+                return stem + 'sumus'
+
+            case (VerbPerson.TWO, Number.PLU):
+                return stem + 'estis'
+
+            case (VerbPerson.THR, Number.PLU):
+                return stem + 'sunt'
+    elif infinitive == 'posse':
+        stem = oneSingularForm[:-4] 
+        
+        match (person, number):
+            case (VerbPerson.TWO, Number.SNG):
+                return stem + 'tes'
+
+            case (VerbPerson.THR, Number.SNG):
+                return stem + 'test'
+
+            case (VerbPerson.ONE, Number.PLU):
+                return stem + 'ssumus'
+
+            case (VerbPerson.TWO, Number.PLU):
+                return stem + 'testis'
+
+            case (VerbPerson.THR, Number.PLU):
+                return stem + 'ssunt'
+
+def toWantConj(oneSingularForm, person, number):
+    stem = oneSingularForm[:-4] 
+    
     match (person, number):
         case (VerbPerson.TWO, Number.SNG):
-            return stem + 'es'
+            return stem + 'vis'
 
         case (VerbPerson.THR, Number.SNG):
-            return stem + 'est'
+            return stem + 'vult'
 
         case (VerbPerson.ONE, Number.PLU):
-            return stem + 'sumus'
+            return stem + 'volumus'
 
         case (VerbPerson.TWO, Number.PLU):
-            return stem + 'estis'
+            return stem + 'vultis'
 
         case (VerbPerson.THR, Number.PLU):
-            return stem + 'sunt'
+            return stem + 'volunt'
+
 

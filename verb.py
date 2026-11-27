@@ -2,7 +2,7 @@ from enums import *
 from conjugationFuncs import *
 
 class Verb(Word):
-    def __init__(self, text, person = VerbPerson.NONE, number = Number.NONE):
+    def __init__(self, text, person = VerbPerson.NONE, number = Number.NONE, infinitive = False):
         super().__init__(text, Speech.VERB)
 
         self.person = person
@@ -11,6 +11,8 @@ class Verb(Word):
             self.person = VerbPerson.THR
 
         self.number = number
+
+        self.infinitive = infinitive
 
         if thoughtProccess: print(f"Initalized verb, {self.text}")
 
@@ -66,22 +68,31 @@ class Verb(Word):
             self.conjugation = 4
         elif part1.endswith('sum'):
             self.conjugation = 0
+        elif part1.endswith('volo'):
+            self.conjugation = 0.1
         else:
             #-1 will be the conj. for unknown or unrecognized.
             self.conjugation = -1
 
     def conjugate(self):
         part1 = self.dictEntry[0]
+        part2 = self.dictEntry[1]
+
+        if self.infinitive:
+            self.translation = part2
+            return
 
         if (self.person, self.number) == (VerbPerson.ONE, Number.SNG):
             self.translation = part1
             return
 
-        part2 = self.dictEntry[1]
+        
 
         match self.conjugation:
             case 0:
-                self.translation = toBeConj(part1, self.person, self.number)
+                self.translation = toBeConj(part1, part2, self.person, self.number)
+            case 0.1:
+                self.translation = toWantConj(part1, self.person, self.number)
             case 1:
                 self.translation = firstConj(part2, self.person, self.number)
             case 2:

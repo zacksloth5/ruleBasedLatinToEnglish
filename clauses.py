@@ -41,6 +41,7 @@ class Clause:
         wordPosition = 0  
         wordNumber = 0
         currPreposition = None
+        inInfinitive = False
 
         #Iterative loop which attempts to classify each word in the sentence
         for word in self.wordList:
@@ -57,7 +58,7 @@ class Clause:
                 wordNumber += 1
                 continue
 
-            if word in englishPrepositions:
+            if word in englishPrepositions and not inInfinitive:
                 currPreposition = Preposition(word)
                 self.wordObjectList.append(currPreposition)
                 wordNumber += 1
@@ -84,10 +85,24 @@ class Clause:
             if wordPosition == 1:
                 self.wordObjectList.append(Verb(word))
 
+                if word in infitivalVerbs:
+                    inInfinitive = True
+
+            if wordPosition == 2 and word == 'to' and inInfinitive:
+                wordNumber += 1
+                continue
+
             #The third word not in a preposition is assumed to be the object if it is not a conjunction.
             if wordPosition == 2 and word not in englishConjunctions:
-                if word in englishPronouns:
-                    self.wordObjectList.append(Pronoun(word, NounCase.ACC))
+                if inInfinitive:
+                    self.wordObjectList.append(Verb(word, infinitive = True))
+                    #Now let an object still be taken, so do not increase the wordPosition
+                    inInfinitive = False
+                    wordNumber += 1
+                    continue
+
+                elif word in englishPronouns:
+                    self.wordObjectList.append(Pronoun(word, NounCase.ACC))    
                 else:
                     self.wordObjectList.append(Noun(word, NounCase.ACC))
 
@@ -147,7 +162,8 @@ class Clause:
                 if thoughtProccess:
                     print(f"{word.text} conjugated as {word.translation}.")
 
-                self.reOrderedWords[4].append(word)
+                #To make infinitival verbs appear first
+                self.reOrderedWords[4].insert(0, word)
 
         self.wordList = [word for wordList in self.reOrderedWords for word in wordList]
 
